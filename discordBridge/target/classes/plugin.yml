@@ -1,0 +1,4 @@
+name: DiscordBridge
+version: 1.0
+main: me.discordBridge.DiscordBridge
+api-version: '1.21'

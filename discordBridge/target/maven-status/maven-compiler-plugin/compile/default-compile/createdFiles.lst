@@ -1,0 +1,5 @@
+me\discordBridge\discord\DiscordBot.class
+me\discordBridge\discord\WebhookClient.class
+me\discordBridge\chat\DiscordMessageListener.class
+me\discordBridge\DiscordBridge.class
+me\discordBridge\chat\MinecraftChatListener.class
