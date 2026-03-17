@@ -3,6 +3,7 @@ package me.discordBridge;
 import me.discordBridge.chat.MinecraftChatListener;
 import me.discordBridge.discord.DiscordBot;
 import me.discordBridge.discord.WebhookClient;
+import me.discordBridge.commands.DiscordBridgeCommand;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -24,7 +25,17 @@ public class DiscordBridge extends JavaPlugin {
         }
 
         discordBot = new DiscordBot();
-        discordBot.start(this, token, channelId);
+        boolean started = discordBot.start(this, token, channelId);
+
+        if(!started) {
+            getLogger().severe("Disabling plugin due to Discord startup failure.");
+            getServer().getPluginManager().disablePlugin(this);
+            return;
+        }
+
+        getCommand("discordBridge").setExecutor(
+            new DiscordBridgeCommand(discordBot, channelId)
+        );
 
         WebhookClient webhookClient = new WebhookClient(webhookUrl);
         Bukkit.getPluginManager().registerEvents(
