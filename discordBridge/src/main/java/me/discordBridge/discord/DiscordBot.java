@@ -10,7 +10,12 @@ public class DiscordBot {
 
     private JDA jda;
 
-    public void start(JavaPlugin plugin, String token, String channelId) {
+    public JDA getJda()
+    {
+        return jda;
+    }
+
+    public boolean start(JavaPlugin plugin, String token, String channelId) {
         try {
             jda = JDABuilder.createDefault(token)
                     .enableIntents(
@@ -20,10 +25,27 @@ public class DiscordBot {
                     .addEventListeners(new DiscordMessageListener(channelId))
                     .build();
 
-            plugin.getLogger().info("Discord bot logging in...");
+            plugin.getLogger().info("Connecting to Discord...");
+
+            // Wait until connection is found
+            jda.awaitReady();
+
+            plugin.getLogger().info("Discord bot connected as " + jda.getSelfUser().getName());
+
+            // Validate the channel
+            if(jda.getTextChannelById(channelId) == null) {
+                plugin.getLogger().severe("Invalid Discord channel ID!");
+                return false;
+            }
+
+            plugin.getLogger().info("Discord channel verified!");
+
+            return true;
+
         } catch (Exception e) {
             plugin.getLogger().severe("Failed to start Discord bot!");
             e.printStackTrace();
+            return false;
         }
     }
 
@@ -32,4 +54,4 @@ public class DiscordBot {
             jda.shutdownNow();
         }
     }
-}
+ }
