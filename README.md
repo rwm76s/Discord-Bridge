@@ -43,6 +43,8 @@ DiscordBridge/
 │  ├─ chat/
 │  │  ├─ DiscordMessageListener.java
 │  │  └─ MinecraftChatListener.java
+|  ├─ commands/
+|  |  └─ DiscordBridgeCommand.java
 │  └─ discord/
 │     ├─ DiscordBot.java
 │     └─ WebhookClient.java
@@ -109,6 +111,13 @@ webhook:
 
 ---
 
+## Commands
+
+* To use the **status** command, type "/discordbridge status" into the chat
+* The output will notify you if either the webhook or discord bot are not connected
+
+---
+
 ## Built With
 
 * [PaperMC](https://papermc.io/)
@@ -122,4 +131,4 @@ webhook:
 
 * Do **not** expose your bot token
 * Regenerate the token immediately if leaked
-* Restrict the bot to only necessary permissions
+* Restrict the bot to only necessary permissions (View channels, read messages, and send messages)
