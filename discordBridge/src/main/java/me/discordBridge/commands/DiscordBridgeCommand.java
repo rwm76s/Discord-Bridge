@@ -20,8 +20,9 @@ public class DiscordBridgeCommand implements CommandExecutor {
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
 
+        // Show the user how to properly call the command
         if (args.length == 0 || !args[0].equalsIgnoreCase("status")) {
-            sender.sendMessage(ChatColor.YELLOW + "/discordbridge status");
+            sender.sendMessage(ChatColor.YELLOW + " Did you mean: '/discordbridge status'?");
             return true;
         }
 
