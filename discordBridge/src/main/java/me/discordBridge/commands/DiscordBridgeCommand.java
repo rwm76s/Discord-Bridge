@@ -2,7 +2,8 @@ package me.discordBridge.commands;
 
 import me.discordBridge.discord.DiscordBot;
 import net.dv8tion.jda.api.JDA;
-import org.bukkit.ChatColor;
+import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.format.NamedTextColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.CommandExecutor;
@@ -22,30 +23,41 @@ public class DiscordBridgeCommand implements CommandExecutor {
 
         // Show the user how to properly call the command
         if (args.length == 0 || !args[0].equalsIgnoreCase("status")) {
-            sender.sendMessage(ChatColor.YELLOW + " Did you mean: '/discordbridge status'?");
+            sender.sendMessage(
+                    Component.text("Did you mean: '/discordbridge status'?").color(NamedTextColor.YELLOW)
+            );
             return true;
         }
 
-        sender.sendMessage(ChatColor.AQUA + "DiscordBridge Status");
+        sender.sendMessage(
+                Component.text("DiscordBridge Status").color(NamedTextColor.AQUA)
+        );
 
         JDA jda = bot.getJda();
 
         if (jda == null) {
-            sender.sendMessage(ChatColor.RED + "Bot Connected: false");
+            sender.sendMessage(
+                    Component.text("Bot Connected: False").color(NamedTextColor.RED)
+            );
             return true;
         }
 
         boolean connected = jda.getStatus().name().equals("CONNECTED");
 
-        sender.sendMessage(ChatColor.GREEN + "Bot Connected: " + connected);
+        sender.sendMessage(
+                Component.text("Bot Connected: " + connected).color(NamedTextColor.GREEN)
+        );
 
         if (connected) {
-            sender.sendMessage(ChatColor.GREEN + "Bot Username: " +
-                    jda.getSelfUser().getName());
+            sender.sendMessage(Component.text("Bot Username: " +
+                    jda.getSelfUser().getName()).color(NamedTextColor.GREEN)
+            );
 
             boolean channelExists = jda.getTextChannelById(channelId) != null;
 
-            sender.sendMessage(ChatColor.GREEN + "Discord Channel Found: " + channelExists);
+            sender.sendMessage(
+                    Component.text("Discord Channel Found: " + channelExists).color(NamedTextColor.GREEN)
+            );
         }
 
         return true;

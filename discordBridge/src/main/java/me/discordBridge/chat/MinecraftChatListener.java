@@ -3,7 +3,8 @@ package me.discordBridge.chat;
 import me.discordBridge.discord.WebhookClient;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
-import org.bukkit.event.player.AsyncPlayerChatEvent;
+import io.papermc.paper.event.player.AsyncChatEvent;
+import net.kyori.adventure.text.serializer.plain.PlainTextComponentSerializer;
 
 public class MinecraftChatListener implements Listener {
 
@@ -14,9 +15,9 @@ public class MinecraftChatListener implements Listener {
     }
 
     @EventHandler
-    public void onChat(AsyncPlayerChatEvent event) {
+    public void onChat(AsyncChatEvent event) {
         String username = event.getPlayer().getName();
-        String message = event.getMessage();
+        String message = PlainTextComponentSerializer.plainText().serialize(event.message());
 
         webhookClient.sendMessage(username, message);
     }

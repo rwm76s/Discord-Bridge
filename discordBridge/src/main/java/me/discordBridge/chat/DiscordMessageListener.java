@@ -3,6 +3,10 @@ package me.discordBridge.chat;
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
 import org.bukkit.Bukkit;
+import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.format.NamedTextColor;
+
+import java.util.Objects;
 
 public class DiscordMessageListener extends ListenerAdapter {
 
@@ -32,12 +36,15 @@ public class DiscordMessageListener extends ListenerAdapter {
 
         if (content.isBlank()) return;
 
+        Component message = Component.text("[Discord] ").color(NamedTextColor.BLUE)
+                .append(Component.text(username).color(NamedTextColor.WHITE))
+                .append(Component.text(": ").color(NamedTextColor.WHITE))
+                .append(Component.text(content).color(NamedTextColor.WHITE));
+
         // Send to Minecraft main thread
         Bukkit.getScheduler().runTask(
-                Bukkit.getPluginManager().getPlugin("DiscordBridge"),
-                () -> Bukkit.broadcastMessage(
-                        "§9[Discord] §f" + username + ": " + content
-                )
+                Objects.requireNonNull(Bukkit.getPluginManager().getPlugin("DiscordBridge")),
+                () -> Bukkit.broadcast(message)
         );
     }
 }
